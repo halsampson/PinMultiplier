@@ -18,7 +18,7 @@ Using a single 8-bit shift register (SN74HC595) to turn **1 MCU pin into 9 usabl
 
 ---
 
-## Variant 1 — One Pin, Filter Resistor (SER + SRCLK + RCLK tied together)
+## Variant 1 — One Pin, Filter Resistor (SRCLK + RCLK tied together; resistor to SER)
 
 Only **one MCU pin** drives everything. A resistor filters SER input so the previous average value is shifted in by SRCLK:
 
@@ -46,7 +46,7 @@ Trade-off: this relies on matching the RC time constant of pin and board capacit
 
 ---
 
-## Variant 2 — Glitch-Free Latch (extra resistor or extra pin on RCLK)
+## Variant 2 — Glitch-Free Latch (extra resistor or extra pin for RCLK)
 
 To avoid any risk of the outputs flickering mid-shift (since RCLK is tied to the same
 node as SRCLK/SER), give RCLK its own, larger-value resistor (or its own dedicated MCU
@@ -73,7 +73,7 @@ still saving a pin versus a fully separate SER/SRCLK/RCLK wiring.
 
 ---
 
-## Variant 3 — Two Pins, No Resistor (fast/simple timing)
+## Variant 3 — Two Pins, No Resistors (fast/simple timing)
 
 Drop the resistor trick altogether: dedicate one pin to **SER** (data) and one to
 **SRCLK** (clock), driven with standard bit-bang or hardware SPI timing. RCLK can still
